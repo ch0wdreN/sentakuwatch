@@ -1,0 +1,18 @@
+$backgroundColor: #ffffff;
+$fontColor: #808080;
+
+.notDisplay {
+    visibility: hidden;
+    position: absolute;
+}
+
+.showCard {
+    background-color: $backgroundColor;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    .contents {
+        color: $fontColor;
+        padding: 2em;
+    }
+}
