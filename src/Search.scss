@@ -1,0 +1,122 @@
+$shadowColor: #c0c0c0;
+$fontSize: calc(15px + 2vmin);
+$iconColor: #00fa9a;
+$fontColor: #808080;
+
+.searchBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+    .container {
+        box-shadow: 0 0 15px $shadowColor;
+        height: calc(50px + 2vmin);
+        width: calc(50px + 2vmin);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        cursor: pointer;
+        &::after, &::before {
+            border: 1px solid $shadowColor;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            opacity:1;
+            animation: pulsate 2s linear infinite;
+        }
+        &::after {
+            animation-delay: 1s;
+        }
+        .searchIcon {
+            font-size: $fontSize;
+            color: $iconColor;
+            transition: background-color cubic-bezier(0.215, 0.61, 0.355, 1) .4s;
+        }
+    }
+}
+
+.contentModal {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    margin: 0 auto;
+    border: 0;
+    outline: 0;
+    height: 40%;
+    width: 60%;
+    background-color: #ffffff;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    padding: 2em;
+    .closeIcon {
+        color: $iconColor;
+        cursor: pointer;
+        font-size: $fontSize;
+    }
+    .contents {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        gap: 20px;
+        > select {
+            padding: 10px;
+            height: calc(25px + 2vmin);
+            color: $fontColor;
+            border: solid 1px $fontColor;
+            font-size: 15px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        button {
+            font-size: 18px;
+            color: $fontColor;
+            cursor: pointer;
+            border: unset;
+            height: calc(30px + 2vmin);
+            width: calc(50px + 2vmin);
+            background-color: $iconColor;
+            border-radius: 20px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            text-decoration: none;
+        }
+    }
+}
+
+.overlay {
+    padding: 1rem;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes pulsate {
+    0%{
+        transform: scale(1);
+        opacity: 1;
+    }
+    100%{
+        transform:scale(2);
+        opacity: 0;
+    }
+}
