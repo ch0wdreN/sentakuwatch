@@ -4,7 +4,6 @@ import { IoClose } from 'react-icons/io5'
 import Card from './Card'
 import './Search.scss'
 import Modal from 'react-modal'
-// import axios from 'axios'
 
 Modal.setAppElement('#root')
 
@@ -45,18 +44,21 @@ class Search extends React.Component {
     }
 
     handleSubmit(event) {
-        // const url = ''
-        // axios.get(url, {
-        //     params: {
-        //         floor: this.state.floor,
-        //         machine: this.state.machine
-        //     }
-        // }).then(function (response) {
-        //     this.state.parameter = response.parameter;
-        //     this.state.using = response.using;
-        // })
-        this.setState({ parameter: 5 })
-        this.setState({ using: 3 })
+        const params = {floor: this.state.floor, machine: this.state.machine};
+        const query = new URLSearchParams(params);
+        fetch(`http://localhost:8888/number?${query}`)
+          .then(response => {
+              return response.json();
+          })
+          .then(data => {
+              // eslint-disable-next-line react/no-direct-mutation-state
+              this.state.parameter = data.parameter;
+              // eslint-disable-next-line react/no-direct-mutation-state
+              this.state.using = data.using;
+          })
+          .catch(error => {
+              console.log(error)
+          });
         this.setState({ showModal: false })
         this.setState({ showCard: true })
         event.preventDefault()
