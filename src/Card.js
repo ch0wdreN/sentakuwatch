@@ -1,9 +1,12 @@
 import React from 'react'
 import './Card.scss'
-import Circle from "react-circle"
+import Circle from 'react-circle'
 
 const Card = (prop) => {
-    let progress = 100 - prop.using / prop.param * 100;
+    let progress =
+        prop.using - prop.param !== 0
+            ? 100 - (prop.using / prop.param) * 100
+            : 0
     return (
         <div>
             <div className={prop.isShow ? 'showCard' : 'notDisplay'}>
@@ -20,16 +23,13 @@ const Card = (prop) => {
                     <Circle
                         animate={true}
                         responsive={true}
-
                         progress={progress}
-                        textColor="#808080"
-                        progressColor="#00fa9a"
+                        textColor='#808080'
+                        progressColor='#00fa9a'
                         roundedStroke={true}
-                        bgColor=""
+                        bgColor=''
                     />
-                    <p>
-                        {prop.param - prop.using} 台が使用可能です
-                    </p>
+                    <p>{prop.param - prop.using} 台が使用可能です</p>
                 </div>
             </div>
         </div>

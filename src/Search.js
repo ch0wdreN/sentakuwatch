@@ -13,17 +13,14 @@ class Search extends React.Component {
         this.state = {
             showModal: false,
             showCard: false,
-            floor: '',
-            machine: '',
             parameter: 0,
             using: 0,
+            selectedValueAtFloor: '階を選択してください',
+            selectedValueAtMachine: '洗濯機か乾燥機を選択してください',
         }
 
         this.handleOpenModal = this.handleOpenModal.bind(this)
         this.handleCloseModal = this.handleCloseModal.bind(this)
-
-        this.handleChangeFloor = this.handleChangeFloor.bind(this)
-        this.handleChangeMachine = this.handleChangeMachine.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -35,30 +32,27 @@ class Search extends React.Component {
         this.setState({ showModal: false })
     }
 
-    handleChangeFloor(event) {
-        this.setState({ floor: event.target.value })
-    }
-
-    handleChangeMachine(event) {
-        this.setState({ machine: event.target.value })
-    }
-
     handleSubmit(event) {
-        const params = {floor: this.state.floor, machine: this.state.machine};
-        const query = new URLSearchParams(params);
-        fetch(`http://localhost:8888/number?${query}`)
-          .then(response => {
-              return response.json();
-          })
-          .then(data => {
-              // eslint-disable-next-line react/no-direct-mutation-state
-              this.state.parameter = data.parameter;
-              // eslint-disable-next-line react/no-direct-mutation-state
-              this.state.using = data.using;
-          })
-          .catch(error => {
-              console.log(error)
-          });
+        const params = {
+            floor: this.state.selectedValueAtFloor,
+            machine: this.state.selectedValueAtMachine,
+        }
+        const query = new URLSearchParams(params)
+        fetch(`Access-Control-Allow-Origin: http://192.168.14.7:8888/number?${query}`)
+            .then((response) => {
+                return response.json()
+            })
+            .then((data) => {
+                // eslint-disable-next-line react/no-direct-mutation-state
+                this.state.parameter = data.parameter
+                // eslint-disable-next-line react/no-direct-mutation-state
+                this.state.using = data.using
+            })
+            .catch((error) => {
+                console.log(error)
+                alert('データの取得に失敗しました')
+                this.setState({showCard: false})
+            })
         this.setState({ showModal: false })
         this.setState({ showCard: true })
         event.preventDefault()
@@ -90,10 +84,14 @@ class Search extends React.Component {
                     <form onSubmit={this.handleSubmit} className='contents'>
                         <select
                             className='selectBox'
-                            onChange={this.handleChangeFloor}
-                            value={this.state.floor}
+                            value={this.state.selectedValueAtFloor}
+                            onChange={(event) =>
+                                this.setState({
+                                    selectedValueAtFloor: event.target.value,
+                                })
+                            }
                         >
-                            <option value='' selected hidden disabled>
+                            <option hidden disabled>
                                 階を選択してください
                             </option>
                             <option value='2'>2階</option>
@@ -102,11 +100,15 @@ class Search extends React.Component {
                         </select>
                         <select
                             className='selectBox'
-                            onChange={this.handleChangeMachine}
-                            value={this.state.machine}
+                            value={this.state.selectedValueAtMachine}
+                            onChange={(event) =>
+                                this.setState({
+                                    selectedValueAtMachine: event.target.value,
+                                })
+                            }
                         >
-                            <option value='' selected hidden disabled>
-                                洗濯機か乾燥機を洗濯してください
+                            <option hidden disabled>
+                                洗濯機か乾燥機を選択してください
                             </option>
                             <option value='washer'>洗濯機</option>
                             <option value='dryer'>乾燥機</option>
