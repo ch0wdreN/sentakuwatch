@@ -38,7 +38,7 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        fetch(`http://192.168.14.7:8888/number?${query}`, {mode: "cors"})
+        fetch(`http://127.0.0.1:8888/number?${query}`, {mode: "cors"})
             .then((response) => {
                 return response.json()
             })
