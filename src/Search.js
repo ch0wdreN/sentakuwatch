@@ -38,7 +38,7 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        fetch(`http://localhost:8888/number?${query}`, {mode: "cors"})
+        fetch(`Access-Control-Allow-Origin: http://localhost:8888/number?${query}`, {mode: "cors"})
             .then((response) => {
                 return response.json()
             })
