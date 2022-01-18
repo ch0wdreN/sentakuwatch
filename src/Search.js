@@ -38,7 +38,7 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        fetch(`Access-Control-Allow-Origin: http://192.168.14.7:8888/number?${query}`)
+        fetch(`http://192.168.14.7:8888/number?${query}`, {mode: "cors"})
             .then((response) => {
                 return response.json()
             })
@@ -50,7 +50,7 @@ class Search extends React.Component {
             })
             .catch((error) => {
                 console.log(error)
-                alert('データの取得に失敗しました')
+                alert('エラーが発生しました')
                 this.setState({showCard: false})
             })
         this.setState({ showModal: false })
@@ -119,8 +119,8 @@ class Search extends React.Component {
                     </form>
                 </Modal>
                 <Card
-                    floor={this.state.floor}
-                    machine={this.state.machine}
+                    floor={this.state.selectedValueAtFloor}
+                    machine={this.state.selectedValueAtMachine}
                     param={this.state.parameter}
                     using={this.state.using}
                     isShow={this.state.showCard}
