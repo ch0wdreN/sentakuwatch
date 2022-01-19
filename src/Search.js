@@ -38,7 +38,7 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        fetch(`Origin: http://localhost:8888/number?${query}`, {mode: "cors"})
+        fetch(`Origin: http://localhost:8888/number?${query}`, {mode: "cors", method: 'GET'})
             .then((response) => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
