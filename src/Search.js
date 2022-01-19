@@ -40,6 +40,9 @@ class Search extends React.Component {
         const query = new URLSearchParams(params)
         fetch(`Origin: http://localhost:8888/number?${query}`, {mode: "cors"})
             .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
                 return response.json()
             })
             .then((data) => {
