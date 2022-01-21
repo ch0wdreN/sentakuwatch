@@ -4,6 +4,7 @@ import { IoClose } from 'react-icons/io5'
 import Card from './Card'
 import './Search.scss'
 import Modal from 'react-modal'
+import axios from "axios";
 
 Modal.setAppElement('#root')
 
@@ -38,24 +39,39 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        fetch(`http://localhost:8888/number?${query}`, {mode: "cors", method: 'GET'})
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json()
-            })
-            .then((data) => {
-                // eslint-disable-next-line react/no-direct-mutation-state
-                this.state.parameter = data.parameter
-                // eslint-disable-next-line react/no-direct-mutation-state
-                this.state.using = data.using
-            })
-            .catch((error) => {
-                console.log(error)
-                alert('エラーが発生しました')
-                this.setState({showCard: false})
-            })
+        axios.get(`http://localhost:8888/number?${query}`)
+          .then((response) => {
+              if (!response.ok) {
+                  throw new Error('Network response was not ok');
+              }
+              // eslint-disable-next-line react/no-direct-mutation-state
+              this.state.parameter = response.data.parameter
+              // eslint-disable-next-line react/no-direct-mutation-state
+              this.state.using = response.data.using
+          })
+          .catch((error) => {
+              console.log(error)
+              alert('エラーが発生しました')
+              this.setState({showCard: false})
+          })
+        // fetch(`http://localhost:8888/number?${query}`, {mode: "cors", method: 'GET'})
+        //     .then((response) => {
+        //         if (!response.ok) {
+        //             throw new Error('Network response was not ok');
+        //         }
+        //         return response.json()
+        //     })
+        //     .then((data) => {
+        //         // eslint-disable-next-line react/no-direct-mutation-state
+        //         this.state.parameter = data.parameter
+        //         // eslint-disable-next-line react/no-direct-mutation-state
+        //         this.state.using = data.using
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //         alert('エラーが発生しました')
+        //         this.setState({showCard: false})
+        //     })
         this.setState({ showModal: false })
         this.setState({ showCard: true })
         event.preventDefault()
