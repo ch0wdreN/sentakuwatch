@@ -42,11 +42,8 @@ class Search extends React.Component {
             machine: this.state.selectedValueAtMachine,
         }
         const query = new URLSearchParams(params)
-        axios.get(`http://localhost:8888/number?${query}`)
+        axios.get(`http://192.168.14.7:8888/number?${query}`)
           .then((response) => {
-              if (!response.ok) {
-                  throw new Error('Network response was not ok');
-              }
               // eslint-disable-next-line react/no-direct-mutation-state
               this.state.parameter = response.data.parameter
               // eslint-disable-next-line react/no-direct-mutation-state
